@@ -70,5 +70,17 @@ dependencies {
     implementation("androidx.media3:media3-ui:$media3Version")
 
     // Coil para mostrar imágenes
+    // Ubicación
+    implementation("com.google.android.gms:play-services-location:21.3.0")
+
+    // Soporte de coroutines para Tasks de Play Services — necesario para .await() en lastLocation
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.8.1")
+
+    // viewModel() composable — necesario para UbicacionViewModel y SensoresViewModel en Compose
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
+
+    // Google Maps Compose (para visualizar la ubicación)
+    implementation("com.google.maps.android:maps-compose:6.2.0")
+    // Coil para mostrar imágenes
     implementation("io.coil-kt:coil-compose:2.7.0")
 }

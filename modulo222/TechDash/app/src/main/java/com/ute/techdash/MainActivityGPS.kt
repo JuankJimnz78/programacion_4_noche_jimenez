@@ -7,7 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import com.ute.techdash.ui.hardware.gps.PantallaGPS
 import com.ute.techdash.ui.theme.TechDashTheme
 
-class MainActivity : ComponentActivity() {
+class MainActivityGPS : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
