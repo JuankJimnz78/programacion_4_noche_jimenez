@@ -17,11 +17,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.shopapp.presentation.viewmodel.AuthViewModel
 import com.shopapp.theme.*
+import androidx.compose.foundation.clickable
+import androidx.compose.material.icons.filled.Send
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 
 @Composable
 fun ProfileScreen(
     authViewModel: AuthViewModel,
     onLogout:      () -> Unit,
+    onSendNotification: () -> Unit = {},
 ) {
     val user by authViewModel.currentUser.collectAsState()
 
