@@ -3,6 +3,7 @@ package com.shopapp.domain.repository
 
 import com.shopapp.domain.model.User
 import com.shopapp.domain.model.UserPayload
+import com.shopapp.domain.model.NotificationResult
 
 interface UserRepository {
     suspend fun getUsers(
@@ -17,4 +18,11 @@ interface UserRepository {
     suspend fun deleteUser(id: Int): Result<Unit>
     suspend fun toggleActive(id: Int): Result<Boolean>
     suspend fun getStats(): Result<Map<String, Int>>
+
+    // ── Notificaciones de staff ────────────────────────────────────────────
+    suspend fun sendNotification(
+        subject: String,
+        message: String,
+        userId:  Int? = null,
+    ): Result<NotificationResult>
 }
