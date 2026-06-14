@@ -37,4 +37,10 @@ interface UserApi {
 
     @GET("users/stats/")
     suspend fun getStats(): Response<UserStatsDto>
+
+    // ── Notificaciones de staff ────────────────────────────────────────────
+    @POST("emails/send/")
+    suspend fun sendNotification(
+        @Body body: SendNotificationDto,
+    ): Response<NotificationResultDto>
 }
