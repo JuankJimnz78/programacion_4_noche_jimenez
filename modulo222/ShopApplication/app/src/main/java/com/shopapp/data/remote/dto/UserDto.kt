@@ -62,3 +62,19 @@ fun UserPayload.toRequest() = UserRequestDto(
     isActive  = isActive,
     password  = password,
 )
+
+// ── Notificaciones de staff ────────────────────────────────────────────────
+
+/** Cuerpo del POST /api/emails/send/ */
+data class SendNotificationDto(
+    @SerializedName("subject") val subject: String,
+    @SerializedName("message") val message: String,
+    @SerializedName("user_id") val userId:  Int? = null,
+)
+
+/** Respuesta { "detail": "...", "sent": N, "failed": M } */
+data class NotificationResultDto(
+    @SerializedName("detail") val detail: String,
+    @SerializedName("sent")   val sent:   Int,
+    @SerializedName("failed") val failed: Int,
+)
