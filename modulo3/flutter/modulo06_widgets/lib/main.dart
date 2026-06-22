@@ -1,6 +1,12 @@
 // lib/main.dart
 import 'package:flutter/material.dart';
-
+import 'widgets/catalogo_basico.dart';
+import 'widgets/etiqueta.dart';
+import 'widgets/servicio_estado.dart';
+import 'widgets/contador_limitado.dart';
+import 'widgets/reloj.dart';
+import 'widgets/pantalla_contexto.dart';
+import 'widgets/indicador.dart';
 
 // ┌──────────────────────────────────────────────────────────────────┐
 // │  Cambia este número y guarda (Ctrl+S) para navegar entre pasos. │
@@ -13,92 +19,109 @@ import 'package:flutter/material.dart';
 // │  7  Paso 5   BuildContext                                        │
 // │  8  Paso 6   Composición de widgets                             │
 // └──────────────────────────────────────────────────────────────────┘
+const int paso = 8;
 
-
-const int paso = 5;
-
-
-
-
-class ContadorLimitado extends StatefulWidget {
-  final String       etiqueta;
-  final int          limite;
-  final Color        color;          // parámetro extra para demostrar widget.param
-  final VoidCallback? onLimite;      // callback opcional — se llama al alcanzar el límite
-
-  const ContadorLimitado({
-    super.key,
-    required this.etiqueta,
-    this.limite  = 10,
-    this.color   = Colors.indigo,
-    this.onLimite,
-  });
-
-  @override
-  State<ContadorLimitado> createState() => _ContadorLimitadoState();
-}
-
-class _ContadorLimitadoState extends State<ContadorLimitado> {
-  int _valor = 0;
-
-  void _incrementar() {
-    if (_valor >= widget.limite) return;    // defensa extra
-    setState(() => _valor++);
-    if (_valor == widget.limite) {
-      widget.onLimite?.call();              // notifica al padre si registró un callback
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final enLimite  = _valor >= widget.limite;
-    final progreso  = _valor / widget.limite;   // 0.0 → 1.0
-
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(widget.etiqueta,                               // ← widget.etiqueta
-            style: TextStyle(color: widget.color, fontWeight: FontWeight.w600)),
-
-        const SizedBox(height: 4),
-
-        // Barra de progreso que refleja el estado
-        LinearProgressIndicator(
-          value:           progreso,
-          color:           enLimite ? Colors.red : widget.color,   // ← widget.color
-          backgroundColor: widget.color.withOpacity(0.15),
-        ),
-
-        const SizedBox(height: 4),
-
-        Text(
-          '$_valor / ${widget.limite}',                      // ← widget.limite
-          style: TextStyle(
-            fontSize:   28,
-            fontWeight: FontWeight.bold,
-            color:      enLimite ? Colors.red : widget.color,
+void main() => runApp(
+  MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: switch (paso) {
+      1 => const Scaffold(body: Center(child: Saludo())),
+      2 => const CatalogoBasicos(),
+      3 => const Scaffold(
+        body: Center(
+          child: Wrap(
+            spacing: 12,
+            runSpacing: 8,
+            children: [
+              Etiqueta(texto: 'Activo', color: Colors.green),
+              Etiqueta(texto: 'Error', color: Colors.red, relleno: true),
+              Etiqueta(texto: 'En espera', color: Colors.orange),
+              Etiqueta(
+                texto: 'Crítico',
+                color: Colors.red,
+                fontSize: 16,
+                relleno: true,
+              ),
+              Etiqueta(texto: 'Info', color: Colors.blue, fontSize: 11),
+            ],
           ),
         ),
-
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            FilledButton(
-              onPressed: enLimite ? null : _incrementar,    // null = desactivado
-              child: const Text('Sumar'),
-            ),
-            const SizedBox(width: 8),
-            TextButton(
-              onPressed: () => setState(() => _valor = 0),  // reiniciar
-              child: const Text('Reset'),
-            ),
-          ],
+      ),
+      4 => const Scaffold(
+        body: Center(child: ServicioEstado(nombre: 'nginx-proxy')),
+      ),
+      5 => Scaffold(
+        // Paso 3b
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ContadorLimitado(
+                etiqueta: 'Intentos de login',
+                limite: 3,
+                color: Colors.red,
+                onLimite: () => debugPrint('¡Cuenta bloqueada!'),
+              ),
+              const SizedBox(height: 40),
+              ContadorLimitado(
+                etiqueta: 'Conexiones activas',
+                limite: 10,
+                color: Colors.indigo,
+              ),
+            ],
+          ),
         ),
+      ),
+      6 => Scaffold(
+        // Paso 4
+        appBar: AppBar(title: const Text('Cronómetro')),
+        body: const Center(child: Reloj()),
+      ),
+      7 => const PantallaContexto(), // Paso 5 — BuildContext
+      8 => Scaffold(
+        // Paso 6
+        body: Center(
+          child: Wrap(
+            spacing: 32,
+            runSpacing: 24,
+            alignment: WrapAlignment.center,
+            children: const [
+              Indicador(
+                label: 'Servidores activos',
+                valor: '8',
+                color: Colors.green,
+                icono: Icons.dns,
+              ),
+              Indicador(
+                label: 'Alertas críticas',
+                valor: '2',
+                color: Colors.red,
+                icono: Icons.warning_amber,
+                subtitulo: 'Requieren atención',
+              ),
+              Indicador(
+                label: 'Tráfico',
+                valor: '4.2 GB',
+                color: Colors.indigo,
+              ),
+              Indicador(
+                label: 'Uptime',
+                valor: '99.8%',
+                color: Colors.teal,
+                subtitulo: 'Últimos 30 días',
+              ),
+            ],
+          ),
+        ),
+      ),
+      _ => Scaffold(body: Center(child: Text('Paso $paso: crea el widget primero'))),
+    },
+  ),
+);
 
-        if (enLimite)
-          Text('Límite alcanzado',
-              style: TextStyle(fontSize: 12, color: Colors.red.shade700)),
-      ],
-    );
-  }
+class Saludo extends StatelessWidget {
+  const Saludo({super.key});
+  @override
+  Widget build(BuildContext context) =>
+      const Text('Hola Flutter', style: TextStyle(fontSize: 32));
 }
