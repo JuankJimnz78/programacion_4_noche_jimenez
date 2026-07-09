@@ -2,7 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_shop_app/presentation/providers/categories_admin_provider.dart';
+import 'package:flutter_shop_app/presentation/screens/admin/dashboard_screen.dart';
+import 'package:flutter_shop_app/presentation/screens/auth/profile_screen.dart';
 import 'package:flutter_shop_app/presentation/screens/catalog/productdetailscreen.dart';
+import 'package:flutter_shop_app/presentation/screens/orders/orderdetailscreen.dart';
+import 'package:flutter_shop_app/presentation/screens/orders/orders_screen.dart';
+import 'package:flutter_shop_app/presentation/widgets/admin_shell.dart';
 import 'package:go_router/go_router.dart';
 import '../../domain/model/auth_state.dart';
 import '../providers/auth_provider.dart';
@@ -40,6 +46,19 @@ class _PlaceholderScreen extends ConsumerWidget {
   }
 }
 
+// lib/presentation/navigation/app_router.dart — placeholder solo para AdminShell
+
+class _AdminPlaceholder extends StatelessWidget {
+  final String title;
+  const _AdminPlaceholder(this.title);
+
+  @override
+  Widget build(BuildContext context) => Center(
+        child: Text(title,
+            style: const TextStyle(color: Color(0xFF8888AA), fontSize: 16)),
+      );
+}
+
 final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     initialLocation: '/',
@@ -69,25 +88,69 @@ final routerProvider = Provider<GoRouter>((ref) {
         routes: [
           GoRoute(path: '/',        builder: (_, __) => const HomeScreen()),
           GoRoute(path: '/catalog', builder: (_, __) => const CatalogScreen()),
-          GoRoute(
-            builder: (_, state) {
-              final id = int.parse(state.pathParameters['id']!);
-              return ProductDetailScreen(productId: id);
-            },
-          ),
-          GoRoute(path: '/cart',    builder: (_, __) => const CartScreen()),
-          GoRoute(path: '/orders',  builder: (_, __) => const _PlaceholderScreen('Mis pedidos — M6')),
-          GoRoute(path: '/orders/:id', builder: (_, s) => _PlaceholderScreen('Pedido #${s.pathParameters['id']} — M6')),
-          GoRoute(path: '/profile', builder: (_, __) => const _PlaceholderScreen('Perfil — M6')),
-        ],
+      GoRoute(
+        path: '/orders',
+        builder: (_, __) => const OrdersScreen(),
+      ),
+      GoRoute(
+        path: '/orders/:id',
+        builder: (_, s) => OrderDetailScreen(
+          orderId: int.parse(s.pathParameters['id']!),
+        ),
+      ),
+      GoRoute(
+        path: '/profile',
+        builder: (_, __) => const ProfileScreen(),
       ),
 
       GoRoute(
-            path: ':id', // /catalog/1 → id=1
-            builder: (_, state) {
-              final id = int.parse(state.pathParameters['id']!);
-              return ProductDetailScreen(productId: id);
-            },
+  path: '/admin',
+  builder: (_, state) => AdminShell(
+    title:        'Dashboard',
+    currentRoute: state.matchedLocation,
+    child:        const DashboardScreen(),
+  ),
+),
+GoRoute(
+  path: '/admin/categories',
+  builder: (_, state) => AdminShell(
+    title:        'Categorías',
+    currentRoute: state.matchedLocation,
+    child:        const _AdminPlaceholder('Categorías — M8'),
+  ),
+),
+GoRoute(
+  path: '/admin/products',
+  builder: (_, state) => AdminShell(
+    title:        'Productos',
+    currentRoute: state.matchedLocation,
+    child:        const _AdminPlaceholder('Productos — M9'),
+  ),
+),
+      GoRoute(
+        path: '/admin/orders',
+        builder: (_, state) => AdminShell(
+          title:        'Pedidos',
+          currentRoute: state.matchedLocation,
+          child:        const _AdminPlaceholder('Pedidos admin — M10'),
+        ),
+      ),
+      GoRoute(
+        path: '/admin/orders/:id',
+        builder: (_, state) => AdminShell(
+          title:        'Detalle pedido',
+          currentRoute: '/admin/orders',
+          child:        _AdminPlaceholder(
+              'Pedido #${state.pathParameters['id']} — M10'),
+        ),
+      ),
+      GoRoute(
+        path: '/admin/products',
+        builder: (_, state) => AdminShell(
+        title:        'Productos',
+          currentRoute: state.matchedLocation,
+          child:        const ProductsAdminScreen(),
+        ),
       ),
 
       // ── Admin ─────────────────────────────────────────────

@@ -1,7 +1,7 @@
 // lib/presentation/providers/catalog_provider.dart — versión M5 actualizada
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_shop_app/data/remote/api/productremotedatasource.dart';
+import 'package:flutter_shop_app/data/remote/api/product_remote_datasource.dart';
 import '../../data/remote/api/category_remote_datasource.dart';
 import '../../data/remote/api/product_remote_datasource.dart';
 import '../../domain/model/category.dart';

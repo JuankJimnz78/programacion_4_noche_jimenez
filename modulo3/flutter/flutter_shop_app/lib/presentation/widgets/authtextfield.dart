@@ -1,6 +1,7 @@
 // lib/presentation/widgets/auth_text_field.dart
 
 import 'package:flutter/material.dart';
+import 'package:flutter_shop_app/theme/app_colors.dart';
 import '../../domain/theme/app_colors.dart';
 
 class AuthTextField extends StatefulWidget {

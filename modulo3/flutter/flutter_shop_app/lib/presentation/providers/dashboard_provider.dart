@@ -2,7 +2,7 @@
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_shop_app/data/remote/api/orderremotedatasource.dart';
-import 'package:flutter_shop_app/data/remote/api/productremotedatasource.dart';
+import 'package:flutter_shop_app/data/remote/api/product_remote_datasource.dart';
 import '../../data/remote/api/category_remote_datasource.dart';
 import '../../data/remote/api/product_remote_datasource.dart';
 import '../../data/remote/api/order_remote_datasource.dart';

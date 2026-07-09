@@ -2,7 +2,7 @@
 
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_shop_app/data/remote/api/dio_client.dart';
+import 'package:flutter_shop_app/data/remote/dto/dio_client.dart';
 import '../../../../core/error/api_exception.dart';
 import '../dio_client.dart';
 import '../../../../domain/model/order.dart';

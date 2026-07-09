@@ -1,7 +1,7 @@
 // lib/presentation/providers/products_admin_provider.dart
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_shop_app/data/remote/api/productremotedatasource.dart';
+import 'package:flutter_shop_app/data/remote/api/product_remote_datasource.dart';
 import '../../data/remote/api/product_remote_datasource.dart';
 import '../../domain/model/product.dart';
 

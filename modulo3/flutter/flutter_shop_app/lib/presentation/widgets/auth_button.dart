@@ -1,7 +1,8 @@
 // lib/presentation/widgets/auth_button.dart
 
 import 'package:flutter/material.dart';
-import '../../theme/app_colors.dart';
+import 'package:flutter_shop_app/theme/app_colors.dart';
+import '../../domain/theme/app_colors.dart';
 
 class AuthButton extends StatelessWidget {
   final String   label;
