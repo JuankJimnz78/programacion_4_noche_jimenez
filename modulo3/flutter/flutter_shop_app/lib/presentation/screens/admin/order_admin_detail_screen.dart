@@ -2,12 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_shop_app/domain/model/order.dart';
+import 'package:flutter_shop_app/presentation/providers/ordersadminprovider.dart';
 import 'package:go_router/go_router.dart';
 import '../../../theme/app_colors.dart';
 import '../../../core/utils/formatters.dart';
-import '../../domain/model/order.dart';
+
 import '../../widgets/status_badge.dart';
-import '../../providers/orders_admin_provider.dart';
+import '../../providers/ordersadminprovider.dart';
 import '../../widgets/status_dropdown.dart';
 
 class OrderAdminDetailScreen extends ConsumerWidget {

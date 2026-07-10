@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_shop_app/domain/model/order.dart';
 import 'package:go_router/go_router.dart';
 import '../../../theme/app_colors.dart';
 import '../../../core/utils/formatters.dart';
