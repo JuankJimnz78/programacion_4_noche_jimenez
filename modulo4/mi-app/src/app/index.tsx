@@ -1,7 +1,7 @@
 // app/index.tsx
 import { Text, View } from 'react-native'
 import { Paso1 } from './Paso1'
-import { Paso2 } from './Paso2'
+import { Paso } from './Paso2'
 import { Paso3 } from './Paso3'
 
 // ┌──────────────────────────────────────────────────────────────────┐
