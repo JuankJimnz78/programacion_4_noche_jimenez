@@ -6,6 +6,7 @@ import 'package:modulo09_formularios_mp/widgets/fila_producto.dart';
 import 'widgets/formulario_producto.dart';
 import 'screens/pantalla_productos.dart';
 import 'widgets/tarjeta_producto_grid.dart';
+
 // ┌──────────────────────────────────────────────────────────────────┐
 // │  Cambia este número y guarda (Ctrl+S) para navegar entre pasos. │
 // │  1  Paso 1  TextField + TextEditingController + FocusNode       │
@@ -16,24 +17,25 @@ import 'widgets/tarjeta_producto_grid.dart';
 // └──────────────────────────────────────────────────────────────────┘
 const int paso = 5;
 
-void main() => runApp(MaterialApp(
-  debugShowCheckedModeBanner: false,
-  theme: ThemeData(
-    colorScheme: ColorScheme.fromSeed(
-      seedColor: const Color(0xFF1B5E20),
-    ),
-    useMaterial3: true,
-  ),
-  home: switch (paso) {
-    1 => const _Paso1(),
-    2 => const _Paso2(),
-    3 => const _Paso3(),
-    4 => const PantallaProductos(),
-    5 => const PantallaBusqueda(),
-    _ => Scaffold(
-        body: Center(child: Text('Paso $paso: crea el widget primero'))),
-  },
-));
+void main() => runApp(
+      MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF1B5E20)),
+          useMaterial3: true,
+        ),
+        home: switch (paso) {
+          1 => const _Paso1(),
+          2 => const _Paso2(),
+          3 => const _Paso3(),
+          4 => const PantallaProductos(),
+          5 => const PantallaBusqueda(),
+          _ => Scaffold(
+              body: Center(child: Text('Paso $paso: crea el widget primero')),
+            ),
+        },
+      ),
+    );
 
 // ─── Paso 1 — vive en main.dart ────────────────────────────────────────
 class _Paso1 extends StatefulWidget {
@@ -44,7 +46,7 @@ class _Paso1 extends StatefulWidget {
 
 class _Paso1State extends State<_Paso1> {
   final _ctrlNombre = TextEditingController();
-  final _ctrlMarca  = TextEditingController();
+  final _ctrlMarca = TextEditingController();
   final _ctrlPrecio = TextEditingController(text: '0.00');
   final _ctrlCategoria = TextEditingController();
   final _focusMarca = FocusNode();
@@ -100,7 +102,6 @@ class _Paso1State extends State<_Paso1> {
               textInputAction: TextInputAction.next,
               onSubmitted: (_) => _focusPrecio.requestFocus(),
             ),
-
             const SizedBox(height: 12),
             TextField(
               controller: _ctrlCategoria,
@@ -123,7 +124,9 @@ class _Paso1State extends State<_Paso1> {
                 prefixIcon: Icon(Icons.attach_money),
                 border: OutlineInputBorder(),
               ),
-              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              keyboardType: const TextInputType.numberWithOptions(
+                decimal: true,
+              ),
               textInputAction: TextInputAction.done,
               onSubmitted: (_) => FocusScope.of(context).unfocus(),
             ),
@@ -181,7 +184,8 @@ class _Paso2 extends StatelessWidget {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(
-                    'Guardado: ${datos['nombre']} — ${datos['marca']} · \$${datos['precio']}'),
+                  'Guardado: ${datos['nombre']} — ${datos['marca']} · \$${datos['precio']}',
+                ),
                 behavior: SnackBarBehavior.floating,
               ),
             );
@@ -200,11 +204,47 @@ class _Paso3 extends StatefulWidget {
 
 class _Paso3State extends State<_Paso3> {
   final _productos = [
-    ProductoLocal(id: '1', nombre: 'Café Nacional 500g', marca: 'Nescafé', precioReferencial: 2.35, categoria: 'Abarrotes', unidadMedida: 'unidad', destacado: true),
-    ProductoLocal(id: '2', nombre: 'Arroz Superior 1kg', marca: 'Gustadina', precioReferencial: 1.10, categoria: 'Abarrotes', unidadMedida: 'kilogramos'),
-    ProductoLocal(id: '3', nombre: 'Aceite Girasol 1L', marca: 'La Favorita', precioReferencial: 2.89, categoria: 'Abarrotes', unidadMedida: 'litros'),
-    ProductoLocal(id: '4', nombre: 'Leche Entera 1L', marca: 'Toni', precioReferencial: 0.95, categoria: 'Lácteos', unidadMedida: 'litros'),
-    ProductoLocal(id: '5', nombre: 'Detergente 2kg', marca: 'Deja', precioReferencial: 4.20, categoria: 'Limpieza', unidadMedida: 'kilogramos'),
+    ProductoLocal(
+      id: '1',
+      nombre: 'Café Nacional 500g',
+      marca: 'Nescafé',
+      precioReferencial: 2.35,
+      categoria: 'Abarrotes',
+      unidadMedida: 'unidad',
+      destacado: true,
+    ),
+    ProductoLocal(
+      id: '2',
+      nombre: 'Arroz Superior 1kg',
+      marca: 'Gustadina',
+      precioReferencial: 1.10,
+      categoria: 'Abarrotes',
+      unidadMedida: 'kilogramos',
+    ),
+    ProductoLocal(
+      id: '3',
+      nombre: 'Aceite Girasol 1L',
+      marca: 'La Favorita',
+      precioReferencial: 2.89,
+      categoria: 'Abarrotes',
+      unidadMedida: 'litros',
+    ),
+    ProductoLocal(
+      id: '4',
+      nombre: 'Leche Entera 1L',
+      marca: 'Toni',
+      precioReferencial: 0.95,
+      categoria: 'Lácteos',
+      unidadMedida: 'litros',
+    ),
+    ProductoLocal(
+      id: '5',
+      nombre: 'Detergente 2kg',
+      marca: 'Deja',
+      precioReferencial: 4.20,
+      categoria: 'Limpieza',
+      unidadMedida: 'kilogramos',
+    ),
   ];
 
   @override
@@ -222,21 +262,27 @@ class _Paso3State extends State<_Paso3> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.inventory_2_outlined, size: 56, color: cs.onSurfaceVariant),
+                  Icon(
+                    Icons.inventory_2_outlined,
+                    size: 56,
+                    color: cs.onSurfaceVariant,
+                  ),
                   const SizedBox(height: 12),
-                  Text('Sin productos',
-                      style: TextStyle(color: cs.onSurfaceVariant)),
+                  Text(
+                    'Sin productos',
+                    style: TextStyle(color: cs.onSurfaceVariant),
+                  ),
                 ],
               ),
             )
           : ListView.separated(
               itemCount: _productos.length,
-              separatorBuilder: (_, __) =>
-                  const Divider(height: 1, indent: 72),
+              separatorBuilder: (_, __) => const Divider(height: 1, indent: 72),
               itemBuilder: (ctx, i) => FilaProducto(
                 producto: _productos[i],
-                onDestacado: () => setState(() =>
-                    _productos[i].destacado = !_productos[i].destacado),
+                onDestacado: () => setState(
+                  () => _productos[i].destacado = !_productos[i].destacado,
+                ),
                 onEliminar: () => setState(() => _productos.removeAt(i)),
               ),
             ),
